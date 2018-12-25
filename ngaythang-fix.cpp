@@ -46,18 +46,44 @@ int NgayHopLe(int Day,int MM, int YY){
 	return a;
 }
 
-int STTDayInYear(int dd, int mm,int yy){
+int STTDInYr(int dd, int mm,int yy){
 	int count = dd;
 	for (int i = 1 ; i<= mm - 1; i++){
 		count = count + SoNgay(i,yy);
 	}
 	return count;
 }
+/*
+	int stttrongnam(ngaythang x);
+	NgayThang NgayTuSTT(int stt, int nam);
+	NgayThang ADD(NgayThang n,int x);
+*/
+NgayThang ADD(NgayThang n,int x){
+/*
+	
+	int kq = x + STTDInYr(n);
+//Lon hon 365 / 366 neu nam nhuan
+	int nam = n.Nam;
+	if(kq <= 365){
+		return STTDInYr(kq,nam);
+		}
+		else 
+			if(checknhuan(nam) == 1)
+				if(kq == 366)
+					return ngaytustt(kq,nam);
+				else return ngaytustt(kq-366,nam+1);
+			else return ngaytustt(kq-365,nam+1);
+*/
+}
+
+
+
 int main(){
 	string st;
 	NgayThang x;
 	char t[4];
-	
+	do{
+	cin.ignore();
 	cout<<"Nhap vao ngay thang (dd/mm/yyyy) : ";
 	getline(cin,st);
 	
@@ -75,6 +101,8 @@ int main(){
 	t[3] = st[9];
 	x.Nam = atoi(t);
 	
+	}
+	while(NgayHopLe(x.Ngay,x.Thang,x.Nam) == 0);
 	if(CheckNhuan(x.Nam)){
 		cout<<"Nam " <<x.Nam<<" la nam nhuan!"<<endl;
 		
@@ -84,7 +112,7 @@ int main(){
 	}
 	if (NgayHopLe(x.Ngay,x.Thang,x.Nam))
 	{
-		int count = STTDayInYear(x.Ngay,x.Thang,x.Nam);
+		int count = STTDInYr(x.Ngay,x.Thang,x.Nam);
 		cout<<"Ngay thu : " <<count<<endl;
 	}
 	else{
