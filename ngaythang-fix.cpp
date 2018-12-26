@@ -46,34 +46,41 @@ int NgayHopLe(int Day,int MM, int YY){
 	return a;
 }
 
-int STTDInYr(int dd, int mm,int yy){
-	int count = dd;
-	for (int i = 1 ; i<= mm - 1; i++){
-		count = count + SoNgay(i,yy);
+int STTDInYr(NgayThang n){
+	int count = n.Ngay;
+	for (int i = 1 ; i<= n.Thang - 1; i++){
+		count = count + SoNgay(i,n.Nam);
 	}
 	return count;
 }
-/*
-	int stttrongnam(ngaythang x);
-	NgayThang NgayTuSTT(int stt, int nam);
-	NgayThang ADD(NgayThang n,int x);
-*/
+
+
+//	int stttrongnam(ngaythang x); = STTDInYr(NgayThang n)
+int NgayTuSTT(int stt,NgayThang n){
+	
+ 	int thang[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+ 	stt = 0;
+ 	for (int i=1;i<n.Thang;i++)
+ 		stt += thang[i];
+ 	stt += n.Ngay;
+ 	if (n.Thang>2)
+ 	if (CheckNhuan(n.Nam)) stt+=1;
+ 	return stt;	
+ }	
 NgayThang ADD(NgayThang n,int x){
-/*
+
 	
 	int kq = x + STTDInYr(n);
-//Lon hon 365 / 366 neu nam nhuan
 	int nam = n.Nam;
 	if(kq <= 365){
-		return STTDInYr(kq,nam);
+		return NgayTuSTT(kq,nam);
 		}
 		else 
-			if(checknhuan(nam) == 1)
+			if(CheckNhuan(nam) == 1)
 				if(kq == 366)
-					return ngaytustt(kq,nam);
-				else return ngaytustt(kq-366,nam+1);
-			else return ngaytustt(kq-365,nam+1);
-*/
+					return NgayTuSTT(kq,nam);
+				else return NgayTuSTT(kq-366,nam+1);
+			else return NgayTuSTT(kq-365,nam+1);
 }
 
 
@@ -83,7 +90,6 @@ int main(){
 	NgayThang x;
 	char t[4];
 	do{
-	cin.ignore();
 	cout<<"Nhap vao ngay thang (dd/mm/yyyy) : ";
 	getline(cin,st);
 	
@@ -112,11 +118,10 @@ int main(){
 	}
 	if (NgayHopLe(x.Ngay,x.Thang,x.Nam))
 	{
-		int count = STTDInYr(x.Ngay,x.Thang,x.Nam);
+		int count = STTDInYr(x);
 		cout<<"Ngay thu : " <<count<<endl;
 	}
 	else{
 		cout<<"Ngay ko hop le!"<<endl;
 	}
-	cout<<x.Ngay<<"/"<<x.Thang<<"/"<<x.Nam;
 }
